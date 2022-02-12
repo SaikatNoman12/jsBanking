@@ -27,3 +27,61 @@ function showValue(windowId , inputAmount){
 
 };
 
+// this function use total balance calculation with diposit and withdraw input Amount
+function total(totalBlanceId, inputAmount, isAdd){
+    const totalBlance = document.getElementById(totalBlanceId);
+    const totalBlanceAmountt = totalMoney(totalBlanceId);
+
+    if(isAdd == true){
+    const total = totalBlanceAmountt + inputAmount;
+    totalBlance.innerText = total;
+    }
+
+    else{
+        const total = totalBlanceAmountt - inputAmount;
+        totalBlance.innerText = total; 
+    }
+};
+
+// deposit calculation
+document.getElementById('deposit-button').addEventListener('click', function(){
+    const depositInput = inputValue('diposti-input');
+
+    if(depositInput <= 0){
+        alert('Do not accept negative number.');
+    }
+    else if(depositInput > 0){
+        // total deposit blance
+        showValue('ShowDeposit', depositInput);
+        // totla blance
+        total('ShowBlance' ,depositInput, true);
+    }
+    else{
+        alert('Do not accept string value.')
+    }
+});
+
+// withdraw calculation
+document.getElementById('withdraw-button').addEventListener('click', function(){
+    const withdrawInput = inputValue('withdraw-input');
+    const totalBlanceMoney = totalMoney('ShowBlance');
+
+    if(totalBlanceMoney < withdrawInput){
+        alert('sorry your balance is low.')
+    }
+
+    else if(withdrawInput <= 0){
+        alert('Do not accept negative number.');
+    }
+
+    else if(withdrawInput > 0){
+        showValue('ShowWithdraw', withdrawInput);
+
+        // total
+        total('ShowBlance', withdrawInput, false)
+    }
+
+    else{
+        alert('Do not accept string value.')
+    }
+});
